@@ -15,16 +15,16 @@ class MarketController extends Controller
     public function index()
     {
         //modificamos index relizando query a todo
-        $markets=Market::all();
+        $markets=Market::orderBy('name','asc')->paginate(9);
         //regresamos la vista
         return view ('markets.index',['markets'=>$markets]);
     }
 
-    
-     
+
+
     public function create()
     {
-        return view('markets.create']);
+        return view('markets.create');
     }
 
     /**
@@ -35,6 +35,13 @@ class MarketController extends Controller
      */
     public function store(Request $request)
     {
+      $this->validate($request, [
+        'name'=>'bail|required|unique:markets|max:255',
+        'website'=>'bail|required',
+        'city'=>'bail|required',
+      ]);
+
+
         Market::create($request->all());
         return redirect ('markets');
     }

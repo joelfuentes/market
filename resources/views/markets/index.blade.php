@@ -8,5 +8,6 @@
                 </a>
             </li>
         @endforeach
-</ul> 
+</ul>
+{{$markets->links()}}
 @endsection
